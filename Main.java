@@ -69,7 +69,8 @@ public class Main {
         dessert.addProducts(CroqueMonsieur);
 
 //출력 부분
-        Order.mainMenuPage(menuList);
+        Order order = new Order();
+        order.mainMenuPage(menuList);
     }
 
 }

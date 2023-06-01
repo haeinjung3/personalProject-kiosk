@@ -1,14 +1,15 @@
 package personalProject;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
-public class Order {
-static LinkedList<Product> Basket = new LinkedList<Product>();
+    public class Order {
+    LinkedList<Product> Basket = new LinkedList<Product>();
 
-static int waitNumber = 1;
-static void mainMenuPage(ArrayList<Menu> menuList) {
+    int waitNumber = 1;
+    void mainMenuPage(ArrayList<Menu> menuList) {
     System.out.println("\"메가커피에 오신 걸 환영합니다.\"");
     System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.");
 
@@ -24,8 +25,15 @@ static void mainMenuPage(ArrayList<Menu> menuList) {
     System.out.println("6. Order      | 장바구니를 확인 후 주문합니다.");
     System.out.println("7. Cancel     | 진행 중인 주문을 취소합니다.");
 
-    Scanner sc = new Scanner(System.in);
-    int select = sc.nextInt();
+    int select = 0;
+
+    try{
+        Scanner sc = new Scanner(System.in);
+        select = sc.nextInt();
+    }catch (InputMismatchException e){
+        System.out.println("잘못된 입력입니다.");
+        mainMenuPage(menuList);
+    }
 
     ArrayList<Product> product;
 
@@ -51,10 +59,14 @@ static void mainMenuPage(ArrayList<Menu> menuList) {
         case 7:
             cancel(menuList);
             break;
+//        default:
+//            System.out.println("잘못된 입력입니다.");
+//            mainMenuPage(menuList);
+//            break;
     }
 }
 
-static void productMenu(ArrayList<Menu> menuList, int selectMenu){
+    void productMenu(ArrayList<Menu> menuList, int selectMenu){
     System.out.println("MEGA COFFEE에 오신걸 환영합니다.");
     System.out.println("아래 상품메뉴판을 보시고 상품을 골라 입력해주세요");
 
@@ -67,12 +79,13 @@ static void productMenu(ArrayList<Menu> menuList, int selectMenu){
     for (int i = 0; i < products.size(); i++){
         System.out.printf("%d. %-15s| W %.1f | %s\n",(i+1), products.get(i).name, products.get(i).price, products.get(i).explan);
     }
+
     Scanner sc = new Scanner(System.in);
     int select = sc.nextInt();
 
     orderSelect(menuList, selectMenu, select-1);
 }
-static void orderSelect(ArrayList<Menu> menuList, int selectMenu, int selectProduct){
+    void orderSelect(ArrayList<Menu> menuList, int selectMenu, int selectProduct){
     Product product = menuList.get(selectMenu).productList.get(selectProduct);
 
     System.out.printf("%-15s| W %.1f | %s\n", product.name, product.price, product.explan);
@@ -90,13 +103,13 @@ static void orderSelect(ArrayList<Menu> menuList, int selectMenu, int selectProd
             mainMenuPage(menuList);
     }
 }
-static void orderComplete(ArrayList<Menu> menuList,String orderName){
+    void orderComplete(ArrayList<Menu> menuList,String orderName){
     System.out.println(orderName + "(이)가 장바구니에 추가되었습니다.");
     System.out.println();
     mainMenuPage(menuList);
 }
 
-static void showBasket(ArrayList<Menu> menuList){
+    void showBasket(ArrayList<Menu> menuList){
     System.out.println("아래와 같이 주문하시겠습니까?");
     System.out.println();
     System.out.println("[ Orders ]");
@@ -122,7 +135,7 @@ static void showBasket(ArrayList<Menu> menuList){
             mainMenuPage(menuList);
     }
 }
-static void orderComplete(ArrayList<Menu> menuList){
+    void orderComplete(ArrayList<Menu> menuList){
     System.out.println("주문이 완료되었습니다!");
     System.out.println();
     System.out.println("대기번호는 [ " + waitNumber + " ]번 입니다.");
@@ -134,7 +147,7 @@ static void orderComplete(ArrayList<Menu> menuList){
         throw new RuntimeException(e);
     }
 }
-static void cancel(ArrayList<Menu> menuList){
+    void cancel(ArrayList<Menu> menuList){
     System.out.println("진행하던 주문을 취소하시겠습니까?");
     System.out.println("1. 확인    2. 취소");
     Scanner sc = new Scanner(System.in);
@@ -148,7 +161,7 @@ static void cancel(ArrayList<Menu> menuList){
             mainMenuPage(menuList);
     }
 }
-static void cancelComplete(ArrayList<Menu> menuList){
+    void cancelComplete(ArrayList<Menu> menuList){
     System.out.println("진행하던 주문이 취소되었습니다.");
     System.out.println();
     mainMenuPage(menuList);
