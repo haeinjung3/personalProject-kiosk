@@ -16,7 +16,7 @@ static void mainMenuPage(ArrayList<Menu> menuList) {
     System.out.println("[ MEGA COFFEE ]");
 
     for (int i = 0; i < menuList.size(); i++) {
-        System.out.println(menuList.get(i).number + ". " + menuList.get(i).name + "    | " + menuList.get(i).explan);
+        System.out.printf("%d. %-15s| %s\n", menuList.get(i).number, menuList.get(i).name, menuList.get(i).explan);
     }
 
     System.out.println();
@@ -65,7 +65,7 @@ static void productMenu(ArrayList<Menu> menuList, int selectMenu){
     products = menuList.get(selectMenu).productList;
 
     for (int i = 0; i < products.size(); i++){
-        System.out.println((i+1) + ". " + products.get(i).name + "   | W " + products.get(i).price + " | " + products.get(i).explan);
+        System.out.printf("%d. %-15s| W %.1f | %s\n",(i+1), products.get(i).name, products.get(i).price, products.get(i).explan);
     }
     Scanner sc = new Scanner(System.in);
     int select = sc.nextInt();
@@ -75,7 +75,7 @@ static void productMenu(ArrayList<Menu> menuList, int selectMenu){
 static void orderSelect(ArrayList<Menu> menuList, int selectMenu, int selectProduct){
     Product product = menuList.get(selectMenu).productList.get(selectProduct);
 
-    System.out.println(product.name + "   | W " + product.price + " | " + product.explan);
+    System.out.printf("%-15s| W %.1f | %s\n", product.name, product.price, product.explan);
     System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
     System.out.println("1. 확인      2. 취소");
 
@@ -102,7 +102,7 @@ static void showBasket(ArrayList<Menu> menuList){
     System.out.println("[ Orders ]");
     double total = 0.0;
     for(int i = 0; i < Basket.size(); i++){
-        System.out.println(Basket.get(i).name + "  | W " + Basket.get(i).price + " | " + Basket.get(i).explan);
+        System.out.printf("%-15s| W %.1f | %s\n", Basket.get(i).name, Basket.get(i).price, Basket.get(i).explan);
         total += Basket.get(i).price;
     }
     System.out.println();
