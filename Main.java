@@ -68,9 +68,8 @@ public class Main {
         dessert.addProducts(PlainCroffle);
         dessert.addProducts(CroqueMonsieur);
 
-        ArrayList<Product> product = menuList.get(0).products;
 //출력 부분
-        Order.mainMenuPage(menuList, product);
+        Order.mainMenuPage(menuList);
     }
 
 }

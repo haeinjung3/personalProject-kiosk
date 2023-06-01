@@ -6,7 +6,7 @@ public class Menu {
     int number = 0;
     String name = "coffie";
     String explan = "delicious!";
-    ArrayList<Product> products = new ArrayList<Product>();
+    ArrayList<Product> productList = new ArrayList<Product>();
 
     Menu (int number, String name, String explan) {
         this.number = number;
@@ -14,6 +14,6 @@ public class Menu {
         this.explan = explan;
     }
     void addProducts (Product product) {
-           this.products.add(product);
+           this.productList.add(product);
     }
 }

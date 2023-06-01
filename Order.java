@@ -8,7 +8,7 @@ public class Order {
 static LinkedList<Product> Basket = new LinkedList<Product>();
 
 static int waitNumber = 1;
-static void mainMenuPage(ArrayList<Menu> menuList, ArrayList<Product> product) {
+static void mainMenuPage(ArrayList<Menu> menuList) {
     System.out.println("\"메가커피에 오신 걸 환영합니다.\"");
     System.out.println("아래 메뉴판을 보시고 메뉴를 골라 입력해주세요.");
 
@@ -27,48 +27,55 @@ static void mainMenuPage(ArrayList<Menu> menuList, ArrayList<Product> product) {
     Scanner sc = new Scanner(System.in);
     int select = sc.nextInt();
 
+    ArrayList<Product> product;
+
     switch (select){
         case 1:
-            productMenu(menuList, product, 0);
+            productMenu(menuList, 0);
             break;
         case 2:
-            productMenu(menuList, product, 1);
+            productMenu(menuList, 1);
             break;
         case 3:
-            productMenu(menuList, product, 2);
+            productMenu(menuList, 2);
             break;
         case 4:
-            productMenu(menuList, product, 3);
+            productMenu(menuList, 3);
             break;
         case 5:
-            productMenu(menuList, product, 4);
+            productMenu(menuList, 4);
             break;
         case 6:
-            showBasket(menuList, product);
+            showBasket(menuList);
             break;
         case 7:
-            cancel(menuList, product);
+            cancel(menuList);
             break;
     }
 }
 
-static void productMenu(ArrayList<Menu> menuList, ArrayList<Product> product, int number){
+static void productMenu(ArrayList<Menu> menuList, int selectMenu){
     System.out.println("MEGA COFFEE에 오신걸 환영합니다.");
     System.out.println("아래 상품메뉴판을 보시고 상품을 골라 입력해주세요");
 
     System.out.println();
-    System.out.println("[ " + menuList.get(number).name + " MENU ]");
-    product = menuList.get(number).products;
-    for (int i = 0; i < product.size(); i++){
-        System.out.println((i+1) + ". " + product.get(i).name + "   | W " + product.get(i).price + " | " + product.get(i).explan);
+    System.out.println("[ " + menuList.get(selectMenu).name + " MENU ]");
+
+    ArrayList<Product> products = new ArrayList<Product>();
+    products = menuList.get(selectMenu).productList;
+
+    for (int i = 0; i < products.size(); i++){
+        System.out.println((i+1) + ". " + products.get(i).name + "   | W " + products.get(i).price + " | " + products.get(i).explan);
     }
     Scanner sc = new Scanner(System.in);
     int select = sc.nextInt();
 
-    orderSelect(menuList, product, number, select-1);
+    orderSelect(menuList, selectMenu, select-1);
 }
-static void orderSelect(ArrayList<Menu> menuList, ArrayList<Product> product, int selectMenu, int selectProduct){
-    System.out.println(product.get(selectProduct).name + "   | W " + product.get(selectProduct).price + " | " + product.get(selectProduct).explan);
+static void orderSelect(ArrayList<Menu> menuList, int selectMenu, int selectProduct){
+    Product product = menuList.get(selectMenu).productList.get(selectProduct);
+
+    System.out.println(product.name + "   | W " + product.price + " | " + product.explan);
     System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
     System.out.println("1. 확인      2. 취소");
 
@@ -76,20 +83,20 @@ static void orderSelect(ArrayList<Menu> menuList, ArrayList<Product> product, in
     int select = sc.nextInt();
     switch (select){
         case 1:
-            Basket.add(product.get(selectProduct));
+            Basket.add(product);
 //            System.out.println(Basket.get(0).name);
-            orderComplete(menuList, product, product.get(selectProduct).name);
+            orderComplete(menuList, product.name);
         case 2:
-            mainMenuPage(menuList, product);
+            mainMenuPage(menuList);
     }
 }
-static void orderComplete(ArrayList<Menu> menuList, ArrayList<Product> product,String orderName){
+static void orderComplete(ArrayList<Menu> menuList,String orderName){
     System.out.println(orderName + "(이)가 장바구니에 추가되었습니다.");
     System.out.println();
-    mainMenuPage(menuList, product);
+    mainMenuPage(menuList);
 }
 
-static void showBasket(ArrayList<Menu> menuList, ArrayList<Product> product){
+static void showBasket(ArrayList<Menu> menuList){
     System.out.println("아래와 같이 주문하시겠습니까?");
     System.out.println();
     System.out.println("[ Orders ]");
@@ -110,12 +117,12 @@ static void showBasket(ArrayList<Menu> menuList, ArrayList<Product> product){
     switch (select){
         case 1:
             Basket.clear();
-            orderComplete(menuList, product);
+            orderComplete(menuList);
         case 2:
-            mainMenuPage(menuList, product);
+            mainMenuPage(menuList);
     }
 }
-static void orderComplete(ArrayList<Menu> menuList, ArrayList<Product> product){
+static void orderComplete(ArrayList<Menu> menuList){
     System.out.println("주문이 완료되었습니다!");
     System.out.println();
     System.out.println("대기번호는 [ " + waitNumber + " ]번 입니다.");
@@ -127,7 +134,7 @@ static void orderComplete(ArrayList<Menu> menuList, ArrayList<Product> product){
         throw new RuntimeException(e);
     }
 }
-static void cancel(ArrayList<Menu> menuList, ArrayList<Product> product){
+static void cancel(ArrayList<Menu> menuList){
     System.out.println("진행하던 주문을 취소하시겠습니까?");
     System.out.println("1. 확인    2. 취소");
     Scanner sc = new Scanner(System.in);
@@ -136,14 +143,14 @@ static void cancel(ArrayList<Menu> menuList, ArrayList<Product> product){
     switch (select){
         case 1:
             Basket.clear();
-            cancelComplete(menuList, product);
+            cancelComplete(menuList);
         case 2:
-            mainMenuPage(menuList, product);
+            mainMenuPage(menuList);
     }
 }
-static void cancelComplete(ArrayList<Menu> menuList, ArrayList<Product> product){
+static void cancelComplete(ArrayList<Menu> menuList){
     System.out.println("진행하던 주문이 취소되었습니다.");
     System.out.println();
-    mainMenuPage(menuList, product);
+    mainMenuPage(menuList);
 }
 }
