@@ -25,33 +25,18 @@ import java.util.Scanner;
     System.out.println("6. Order      | 장바구니를 확인 후 주문합니다.");
     System.out.println("7. Cancel     | 진행 중인 주문을 취소합니다.");
 
-    int select = 0;
-
-    try{
-        Scanner sc = new Scanner(System.in);
-        select = sc.nextInt();
-    }catch (InputMismatchException e){
-        System.out.println("잘못된 입력입니다.");
-        mainMenuPage(menuList);
-    }
+    Scanner sc = new Scanner(System.in);
+    int select = sc.nextInt();
 
     ArrayList<Product> product;
 
     switch (select){
         case 1:
-            productMenu(menuList, 0);
-            break;
         case 2:
-            productMenu(menuList, 1);
-            break;
         case 3:
-            productMenu(menuList, 2);
-            break;
         case 4:
-            productMenu(menuList, 3);
-            break;
         case 5:
-            productMenu(menuList, 4);
+            productMenu(menuList, (select - 1));
             break;
         case 6:
             showBasket(menuList);
@@ -59,10 +44,10 @@ import java.util.Scanner;
         case 7:
             cancel(menuList);
             break;
-//        default:
-//            System.out.println("잘못된 입력입니다.");
-//            mainMenuPage(menuList);
-//            break;
+        default:
+            System.out.println("잘못된 입력입니다.");
+            mainMenuPage(menuList);
+            break;
     }
 }
 
